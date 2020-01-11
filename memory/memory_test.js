@@ -1,6 +1,6 @@
-const show_time = 30;
-const test_time = 30;
-
+const SHOW_TIME = 30;
+const FILL_TIME = 30;
+const TEST_SET = 12;
 const min = 10;
 const max = 100;
 
@@ -14,16 +14,19 @@ const rand_factory = s => {
 const random = rand_factory(seed);
 
 function generate_test() {
-  const numbers = generate_n umbers(len);
-  document.getElementById('number-div')
-  
+  const numbers = generate_numbers(TEST_SET);
+  const p = document.createElement("P");
+  p.innerHTML = numbers.join(' ');
+  document.getElementById("numbers_div").appendChild(p);
 }
 
 function generate_numbers(len) {
   const randInt = () => Math.floor(random() * (max - min) + min);
   let numbers = [];
-  for (const i = 0; i < len; i++) {
+  for (let i = 0; i < len; i++) {
     numbers.push(randInt());
   }
   return numbers;
 }
+
+generate_test();
