@@ -90,7 +90,8 @@ function scoring(orig, input) {
 }
 
 function final_result() {
-  document.getElementById('result').innerHTML = JSON.stringify(results);
+  const result_text=JSON.stringify(results);
+  document.getElementById('result').innerHTML = result_text;
 }
 
 function generate_test_set() {
