@@ -28,7 +28,7 @@ textarea {
   font-style: bold;
 }
 
-input {
+input[type="button"] {
   display: block;
   margin: 0 auto;
   font-size: 4em;
