@@ -7,8 +7,14 @@
 }
 
 h1 {
+  font-size: 2em;
   font-style: italic;
   color: #373fff;
+}
+
+p {
+  font-size: 50%;
+  font-style: italic;
 }
 
 textarea {
@@ -34,5 +40,5 @@ input {
 }
 
 #result {
-  display: none;
+  font-size: 25%;
 }

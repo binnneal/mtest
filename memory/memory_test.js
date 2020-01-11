@@ -1,7 +1,7 @@
 const SHOW_TIME = 5;
 const FILL_TIME = 10;
 const TEST_SIZE = 12;
-const TEST_REPEAT = 3;
+const TEST_REPEAT = 2;
 const min = 10;
 const max = 100;
 
@@ -16,6 +16,7 @@ const random = rand_factory(seed);
 
 const timer_ele = document.getElementById("timer_div");
 const area_ele = document.getElementsByTagName("textarea")[0];
+const input_ele = document.getElementsById("input_area")[0];
 const numbers_ele = document.getElementById("numbers_div");
 const button_ele = document.getElementsByTagName("input")[0];
 
@@ -54,13 +55,14 @@ function start_timer(timeout, exp_callback) {
 
 function start_input(numbers) {
   let inputs;
-  change_display(area_ele, true);
+  area_ele.value='';
+  change_display(input_ele, true);
   start_timer(FILL_TIME, () => {
     inputs = area_ele.value
       .split(/\s+/)
       .map(x => Number(x.trim()))
       .filter(x => x);
-    change_display(area_ele, false);
+    change_display(input_ele, false);
     setTimeout(() => scoring(numbers, new Set(inputs)), 0);
   });
 }
