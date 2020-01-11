@@ -8,6 +8,7 @@
 
 h1 {
   font-size: 2em;
+  margin: 0 auto;
   font-style: italic;
   color: #373fff;
 }
@@ -20,7 +21,6 @@ p {
 textarea {
   font-style: bold;
   font-size: 1em;
-  display: none;
 }
 
 #numbers_div {

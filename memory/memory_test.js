@@ -16,7 +16,7 @@ const random = rand_factory(seed);
 
 const timer_ele = document.getElementById("timer_div");
 const area_ele = document.getElementsByTagName("textarea")[0];
-const input_ele = document.getElementsById("input_area")[0];
+const input_ele = document.getElementById("input_area");
 const numbers_ele = document.getElementById("numbers_div");
 const button_ele = document.getElementsByTagName("input")[0];
 
@@ -30,7 +30,7 @@ function start_test() {
   while (numbers.size < TEST_SIZE) {
     numbers.add(Math.floor(random() * (max - min) + min));
   }
-  numbers_ele.innerHTML = [...numbers].join(" ");
+  numbers_ele.lastChild.innerHTML = [...numbers].join(" ");
   change_display(numbers_ele, true);
 
   start_timer(SHOW_TIME, () => {
