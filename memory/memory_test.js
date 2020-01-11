@@ -75,8 +75,8 @@ function scoring(orig, input) {
     0
   );
   results.push({
-    orig: [...orig],
-    input: [...input],
+    orig,
+    input,
     score
   });
   if (results.length < TEST_REPEAT) {
