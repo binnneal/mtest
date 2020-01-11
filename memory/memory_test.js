@@ -108,11 +108,11 @@ function scoring(orig, input) {
       change_display(button_ele, true);
     }, 0);
   } else {
-    final_result();
+    do_result();
   }
 }
 
-function final_result() {
+function do_result() {
   const result_text = results.map(x => JSON.stringify(x)).join("<br/>");
   let final = results[0].score;
   if (results.length > 1) {
@@ -123,13 +123,17 @@ function final_result() {
   document.getElementById(
     "result"
   ).innerHTML = `${result_text}<br/>Final Score: ${final}`;
+  button_ele.value = "Restart Test";
+  button_ele.onclick = generate_test_set;
+  change_display(button_ele, true);
 }
 
 function ff_wrapper() {
   ff_function();
 }
 function generate_test_set() {
+  results = [];
   button_ele.value = `Test ${results.length + 1} of ${TEST_REPEAT}`;
-  button_ele.addEventListener("click", start_test);
+  button_ele.onclick = start_test;
   document.getElementsByTagName("h1")[0].addEventListener("click", ff_wrapper);
 }
