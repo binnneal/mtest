@@ -30,7 +30,8 @@ function generate_test() {
     numbers.add(Math.floor(random() * (max - min) + min));
   }
   numbers_ele.appendChild(document.createTextNode([...numbers].join(" ")));
-
+  change_display(numbers_ele, true);
+  
   start_timer(SHOW_TIME, () => {
     change_display(numbers_ele, false);
     setTimeout(() => start_input(numbers), 0);
@@ -56,8 +57,7 @@ function start_input(numbers) {
       .split(/\s+/)
       .map(x => Number(x.trim()))
       .filter(x => !isNaN(x));
-      change_display(area_ele, false);
-
+    change_display(area_ele, false);
     setTimeout(() => scoring(numbers, new Set(inputs)), 0);
   });
 }
@@ -71,8 +71,12 @@ function scoring(orig, input) {
   results.push({
     orig, input, score
   });
-  if (results.size < TEST_REPEAT) {
-    setTimeout(, 0);
+  if (results.length < TEST_REPEAT) {
+    setTimeout(() => {
+      button_ele.value = `Start Test ${results.length}`;
+      change_display(button_ele, true);
+    }, 0);
+  }
 }
 
 //scoring(new Set([11, 22, 33, 4, 2]), new Set([2, 56, 33]))
