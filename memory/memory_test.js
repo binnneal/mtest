@@ -50,14 +50,15 @@ function start_input(numbers) {
   change_display(area_ele, true);
   start_timer(FILL_TIME, () => {
     inputs = area_ele.value
-      .split("\n\t ")
+      .split(/\s+/)
       .map(x => Number(x.trim()))
       .filter(x => !isNaN(x));
     setTimeout(() => scoring(numbers, new Set(inputs)), 0);
   });
 }
 
-function scoring(answers, inputs) {
-  console.log(answers, inputs);
+function scoring(orig, inputs) {
+  console.log(orig, inputs);
+  orig.reduce((accr, x) => )
 }
 generate_test();
