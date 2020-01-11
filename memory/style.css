@@ -2,6 +2,7 @@
 
 body {
   font-family: helvetica, arial, sans-serif;
+  font-size: 2em;
   margin: 2em;
 }
 
@@ -12,13 +13,11 @@ h1 {
 
 p {
   font-style: bold;
-  font-size: 2em;
   color: #373fff;
 }
 
 textarea {
   font-style: bold;
-  font-size: 2em;
   color: #373fff;
   display: none;
 }
@@ -27,4 +26,8 @@ div {
   font-style: italic;
   font-size: 1em;
   color: green;
+}
+
+#result {
+  display: none; 
 }

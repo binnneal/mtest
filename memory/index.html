@@ -8,10 +8,12 @@
 
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="style.css" />
-
   </head>
   <body>
     <h1>Memory Test</h1>
+    <form>
+      <input type="button" value="Starting Test" onclick="generate_test()" />
+    </form>
     <div id="numbers_div"></div>
     <textarea
       id="numbers"
@@ -20,6 +22,7 @@
       placeholder="Type the numbers &#10;(one per line)"
     ></textarea>
     <div id="timer_div"></div>
+    <div id="result"></div>
 
     <br />
     <!-- import the webpage's javascript file -->

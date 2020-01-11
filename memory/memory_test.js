@@ -57,11 +57,15 @@ function start_input(numbers) {
   });
 }
 
-function scoring(orig, inputs) {
-  const score = [...orig].reduce((accr, x) => inputs.has(x)?accr+1:accr, 0);
-  console.log(orig, inputs);
+let results;
+
+function scoring(orig, input) {
+  const score = [...orig].reduce((accr, x) => input.has(x)?accr+1:accr, 0);
+  console.log(orig, input);
   console.log(`score: ${score}`);
+  results.push({
+    orig, input, score
+  })  
 }
 
 //scoring(new Set([11, 22, 33, 4, 2]), new Set([2, 56, 33]))
-generate_test();
