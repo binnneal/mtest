@@ -26,27 +26,16 @@ function generate_test() {
   while (numbers.size < TEST_SIZE) {
     numbers.add(Math.floor(random() * (max - min) + min));
   }
-  numbers_ele.appendChild(document.createTextNode(numbers.join(" ")));
+  numbers_ele.appendChild(document.createTextNode([...numbers].join(" ")));
 
-  let inputs;
   start_timer(SHOW_TIME, () => {
     change_display(numbers_ele, false);
-    setTimeout(start_input, 0);
+    setTimeout(() => start_input(numbers), 0);
   });
-
-  function start_input() {
-    change_display(area_ele, true);
-    start_timer(FILL_TIME, () => {
-      inputs = area_ele.value
-        .split("\n")
-        .map(x => Number(x.trim()))
-        .filter(x => !isNaN(x));
-      setTimeout();
-    });
-  }
 }
 
 function start_timer(timeout, exp_callback) {
+  timer_ele.innerHTML = `${timeout--} seconds remaining`;
   const timer_d = setInterval(() => {
     timer_ele.innerHTML = `${timeout--} seconds remaining`;
     if (timeout < 0) {
@@ -56,4 +45,19 @@ function start_timer(timeout, exp_callback) {
   }, 1000);
 }
 
+function start_input(numbers) {
+  let inputs;
+  change_display(area_ele, true);
+  start_timer(FILL_TIME, () => {
+    inputs = area_ele.value
+      .split("\n\t ")
+      .map(x => Number(x.trim()))
+      .filter(x => !isNaN(x));
+    setTimeout(() => scoring(numbers, new Set(inputs)), 0);
+  });
+}
+
+function scoring(answers, inputs) {
+  console.log(answers, inputs);
+}
 generate_test();
