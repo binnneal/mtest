@@ -1,6 +1,6 @@
 const SHOW_TIME = 5;
 const FILL_TIME = 10;
-const TEST_SET = 12;
+const TEST_SIZE = 12;
 const min = 10;
 const max = 100;
 
@@ -12,6 +12,7 @@ const rand_factory = s => {
   };
 };
 const random = rand_factory(seed);
+
 const timer_ele = document.getElementById("timer_div");
 const area_ele = document.getElementsByTagName("textarea")[0];
 const numbers_ele = document.getElementById("numbers_div");
@@ -21,16 +22,10 @@ function change_display(ele, displayed) {
 }
 
 function generate_test() {
-  function generate_numbers(len) {
-    const randInt = () => Math.floor(random() * (max - min) + min);
-    let numbers = [];
-    for (let i = 0; i < len; i++) {
-      numbers.push(randInt());
-    }
-    return numbers;
+  let numbers = new Set();
+  while (numbers.size < TEST_SIZE) {
+    numbers.add(Math.floor(random() * (max - min) + min));
   }
-
-  const numbers = generate_numbers(TEST_SET);
   numbers_ele.appendChild(document.createTextNode(numbers.join(" ")));
 
   let inputs;
@@ -42,8 +37,11 @@ function generate_test() {
   function start_input() {
     change_display(area_ele, true);
     start_timer(FILL_TIME, () => {
-      inputs = area_ele.value.split('\n').map(x => Number(x.trim()).filter(x => !isNaN(x));
-                                              .trim());
+      inputs = area_ele.value
+        .split("\n")
+        .map(x => Number(x.trim()))
+        .filter(x => !isNaN(x));
+      setTimeout();
     });
   }
 }
