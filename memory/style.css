@@ -2,11 +2,22 @@
 
 body {
   font-family: helvetica, arial, sans-serif;
-  font-size: large;
   margin: 2em;
 }
 
 h1 {
   font-style: italic;
+  color: #373fff;
+}
+
+p {
+  font-style: bold;
+  font-size: 2em;
+  color: #373fff;
+}
+
+textarea {
+  font-style: bold;
+  font-size: 2em;
   color: #373fff;
 }
