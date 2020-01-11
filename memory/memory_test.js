@@ -42,7 +42,8 @@ function generate_test() {
   function start_input() {
     change_display(area_ele, true);
     start_timer(FILL_TIME, () => {
-      console.log(area_ele.value.split('\n').trim());
+      inputs = area_ele.value.split('\n').map(x => Number(x.trim()).filter(x => !isNaN(x));
+                                              .trim());
     });
   }
 }
