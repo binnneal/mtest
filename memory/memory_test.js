@@ -13,10 +13,11 @@ const rand_factory = s => {
 };
 const random = rand_factory(seed);
 const timer_ele = document.getElementById("timer_div");
-const area_ele = document.getElementByTagName("textarea");
+const area_ele = document.getElementsByTagName("textarea")[0];
+const numbers_ele = document.getElementById("numbers_div");
 
-function change_visible(ele, visible) {
-  ele.style.visibility = visible?'visible':'hidden';  
+function change_display(ele, visible) {
+  ele.style.visibility = visible ? "visible" : "hidden";
 }
 
 function generate_test() {
@@ -30,14 +31,12 @@ function generate_test() {
   }
 
   const numbers = generate_numbers(TEST_SET);
-  const p = document.createElement("P");
-  p.innerHTML = numbers.join(" ");
-  document.getElementById("numbers_div").appendChild(p);
-  
+  numbers_ele.appendChild(document.createTextNode(numbers.join(" ")));
+
   let inputs;
-  start_timer(SHOW_TIME,() => {
-  const    input_raw = document.getElementByTagName("textarea").innerHTML;
-    
+  start_timer(SHOW_TIME, () => {
+    change_visible(numbers_ele, false);
+    console.log(area_ele.innerHTML);
   });
 }
 
