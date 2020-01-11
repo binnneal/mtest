@@ -26,6 +26,18 @@ function change_display(ele, displayed) {
   ele.style.display = displayed ? "block" : "none";
 }
 
+function fading(ele, done_cb) {
+  let opacity = 1.0;
+  
+  let intId = setInterval(() => {
+    opacity 
+    if (opacity < 0) {
+      clearInterval(intId);
+      done_cb();
+    }
+  }, 200);
+}
+
 function start_test() {
   change_display(button_ele, false);
   let numbers = new Set();
