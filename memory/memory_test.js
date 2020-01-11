@@ -12,35 +12,41 @@ const rand_factory = s => {
   };
 };
 const random = rand_factory(seed);
+const timer_ele = document.getElementById("timer_div");
 
 function generate_test() {
+  function generate_numbers(len) {
+    const randInt = () => Math.floor(random() * (max - min) + min);
+    let numbers = [];
+    for (let i = 0; i < len; i++) {
+      numbers.push(randInt());
+    }
+    return numbers;
+  }
+
   const numbers = generate_numbers(TEST_SET);
   const p = document.createElement("P");
   p.innerHTML = numbers.join(" ");
   document.getElementById("numbers_div").appendChild(p);
+  
+  start_timer(SHOW_TIME)
 }
 
-function generate_numbers(len) {
-  const randInt = () => Math.floor(random() * (max - min) + min);
-  let numbers = [];
-  for (let i = 0; i < len; i++) {
-    numbers.push(randInt());
-  }
-  return numbers;
-}
-
-const timer_ele = document.getElementById("timer_div");
-let remaining_time = SHOW_TIME;
 function start_timer(timeout, exp_callback) {
   const timer_d = setInterval(() => {
     timer_ele.innerHTML = `${timeout--} seconds remaining`;
     if (timeout < 0) {
       clearInterval(timer_d);
-      exp_callback();
+      setTimeout(exp_callback, 0);
     }
   }, 1000);
 }
 
-function start_test() {}
+function start_input() {}
 
-generate_test();
+function start_grading() {}
+
+generate_test()
+  .then()
+  .thne();
+start_timer(SHOW_TIME, start_input);
