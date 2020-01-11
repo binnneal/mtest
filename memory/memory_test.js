@@ -15,7 +15,7 @@ const random = rand_factory(seed);
 
 function generate_test() {
   const numbers = generate_n umbers(len);
-  document
+  document.getElementById('number-div')
   
 }
 
