@@ -90,16 +90,14 @@ function scoring(orig, input) {
 }
 
 function final_result() {
-  let result_text=JSON.stringify(results);
+  const result_text = results.map(x => JSON.stringify(x)).join('<br/>');
+  let final = results[0].score;
   if (results.length > 1) {
     const bests = results.map(x => x.score).sort();
     bests.shift();
-    const final = bests.reduce((a,x) => a+x, 0)/bests.length;
-    result_text.append(`<br/>Final Score: ${final}`);
-  } else {
-    
+    final = bests.reduce((a,x) => a+x, 0)/bests.length;
   }
-  document.getElementById('result').innerHTML = result_text;
+  document.getElementById('result').innerHTML = `${result_text}<br/>Final Score: ${final}`;
 }
 
 function generate_test_set() {
