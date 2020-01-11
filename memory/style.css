@@ -21,3 +21,9 @@ textarea {
   font-size: 2em;
   color: #373fff;
 }
+
+div {
+  font-style: italic;
+  font-size: 1em;
+  color: green;
+}

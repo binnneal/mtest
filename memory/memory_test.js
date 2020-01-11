@@ -1,4 +1,4 @@
-const SHOW_TIME = 30;
+const SHOW_TIME = 10;
 const FILL_TIME = 30;
 const TEST_SET = 12;
 const min = 10;
@@ -32,10 +32,17 @@ function generate_numbers(len) {
 const timer_ele = document.getElementById("timer_div");
 let remaining_time = SHOW_TIME;
 function update_timer() {
-  timer_ele.innerHTML = `${remaining_time} remaining`;
+  timer_ele.innerHTML = `${remaining_time} seconds remaining`;
   remaining_time--;
-  if ()
+  if (remaining_time  0) {
+    clearInterval(timer_d);
+    start_test();
+  }
+}
+
+function start_test() {
+  
 }
 
 generate_test();
-setInterval(update_timer, 1000);
+const timer_d = setInterval(update_timer, 1000);
