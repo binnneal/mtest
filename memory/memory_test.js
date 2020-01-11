@@ -1,6 +1,7 @@
 const SHOW_TIME = 5;
 const FILL_TIME = 10;
 const TEST_SIZE = 12;
+const TEST_REPEAT = 3;
 const min = 10;
 const max = 100;
 
@@ -16,12 +17,14 @@ const random = rand_factory(seed);
 const timer_ele = document.getElementById("timer_div");
 const area_ele = document.getElementsByTagName("textarea")[0];
 const numbers_ele = document.getElementById("numbers_div");
+const button_ele = document.getElementsByTagName("input")[0];
 
 function change_display(ele, displayed) {
   ele.style.display = displayed ? "block" : "none";
 }
 
 function generate_test() {
+  change_display(button_ele, false);
   let numbers = new Set();
   while (numbers.size < TEST_SIZE) {
     numbers.add(Math.floor(random() * (max - min) + min));
@@ -53,11 +56,13 @@ function start_input(numbers) {
       .split(/\s+/)
       .map(x => Number(x.trim()))
       .filter(x => !isNaN(x));
+      change_display(area_ele, false);
+
     setTimeout(() => scoring(numbers, new Set(inputs)), 0);
   });
 }
 
-let results;
+let results = [];
 
 function scoring(orig, input) {
   const score = [...orig].reduce((accr, x) => input.has(x)?accr+1:accr, 0);
@@ -65,7 +70,9 @@ function scoring(orig, input) {
   console.log(`score: ${score}`);
   results.push({
     orig, input, score
-  })  
+  });
+  if (results.size < TEST_REPEAT) {
+    setTimeout(, 0);
 }
 
 //scoring(new Set([11, 22, 33, 4, 2]), new Set([2, 56, 33]))

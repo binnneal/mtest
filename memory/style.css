@@ -11,14 +11,9 @@ h1 {
   color: #373fff;
 }
 
-p {
-  font-style: bold;
-  color: #373fff;
-}
-
 textarea {
   font-style: bold;
-  color: #373fff;
+    font-size: 1em;
   display: none;
 }
 
@@ -26,6 +21,10 @@ div {
   font-style: italic;
   font-size: 1em;
   color: green;
+}
+
+input {
+  font-size: 4em;
 }
 
 #result {
