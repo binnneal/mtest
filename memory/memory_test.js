@@ -16,7 +16,7 @@ const random = rand_factory(seed);
 function generate_test() {
   const numbers = generate_numbers(TEST_SET);
   const p = document.createElement("P");
-  p.innerHTML = numbers.join(' ');
+  p.innerHTML = numbers.join(" ");
   document.getElementById("numbers_div").appendChild(p);
 }
 
@@ -31,18 +31,16 @@ function generate_numbers(len) {
 
 const timer_ele = document.getElementById("timer_div");
 let remaining_time = SHOW_TIME;
-function update_timer() {
-  timer_ele.innerHTML = `${remaining_time} seconds remaining`;
-  remaining_time--;
-  if (remaining_time  0) {
-    clearInterval(timer_d);
-    start_test();
-  }
+function start_timer(timeout, exp_callback) {
+  const timer_d = setInterval(() => {
+    timer_ele.innerHTML = `${timeout--} seconds remaining`;
+    if (timeout < 0) {
+      clearInterval(timer_d);
+      exp_callback();
+    }
+  }, 1000);
 }
 
-function start_test() {
-  
-}
+function start_test() {}
 
 generate_test();
-const timer_d = setInterval(update_timer, 1000);
