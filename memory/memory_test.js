@@ -1,8 +1,8 @@
 const SHOW_TIME = 20;
 const FILL_TIME = 30;
-const TEST_SIZE = 12;
+const TEST_SIZE = 10;
 const TEST_REPEAT = 3;
-const min = 10;
+const min = 2;
 const max = 100;
 
 const seed = 234;
@@ -60,7 +60,7 @@ function start_test() {
 
 function start_timer(timeout, exp_callback) {
   ff_function = () => {
-    timeout = 2;
+    timeout = 1;
     console.log("Fast forwarded");
     ff_function = () => console.log("No op");
   };
