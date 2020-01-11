@@ -1,7 +1,7 @@
 const SHOW_TIME = 5;
 const FILL_TIME = 10;
 const TEST_SIZE = 12;
-const TEST_REPEAT = 1;
+const TEST_REPEAT = 3;
 const min = 10;
 const max = 100;
 
@@ -90,10 +90,14 @@ function scoring(orig, input) {
 }
 
 function final_result() {
-  const result_text=JSON.stringify(results);
-  if (results.length > 2) {
-    const best_except1 = results.map(x => x.score).sort().shift();
-    const final = best_except1.reduce((a,x) => a+x, 0)/best_except1;
+  let result_text=JSON.stringify(results);
+  if (results.length > 1) {
+    const bests = results.map(x => x.score).sort();
+    bests.shift();
+    const final = bests.reduce((a,x) => a+x, 0)/bests.length;
+    result_text.append(`<br/>Final Score: ${final}`);
+  } else {
+    
   }
   document.getElementById('result').innerHTML = result_text;
 }
