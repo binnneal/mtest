@@ -20,20 +20,26 @@ const input_ele = document.getElementById("input_area");
 const numbers_ele = document.getElementById("numbers_div");
 const button_ele = document.getElementsByTagName("input")[0];
 
-let ff_function = () => console.log('no op');
+let ff_function = () => console.log("no op");
 
 function change_display(ele, displayed) {
   ele.style.display = displayed ? "block" : "none";
+  if (displayed) {
+    ele.style.opacity = 1;
+  }
 }
 
 function fading(ele, done_cb) {
   let opacity = 1.0;
-  
+
   let intId = setInterval(() => {
-    opacity 
+    opacity -= 0.1;
     if (opacity < 0) {
       clearInterval(intId);
-      done_cb();
+      change_display(ele, false);
+      setTimeout(done_cb, 0);
+    } else {
+      ele.style.opacity = opacity;
     }
   }, 200);
 }
@@ -48,23 +54,22 @@ function start_test() {
   change_display(numbers_ele, true);
 
   start_timer(SHOW_TIME, () => {
-    change_display(numbers_ele, false);
-    setTimeout(() => start_input(numbers), 0);
+    fading(numbers_ele, () => start_input(numbers));
   });
 }
 
 function start_timer(timeout, exp_callback) {
   ff_function = () => {
     timeout = 2;
-    console.log('Fast forwarded');
-    ff_function = () => console.log('No op');
-  }
+    console.log("Fast forwarded");
+    ff_function = () => console.log("No op");
+  };
   change_display(timer_ele, true);
 
   timer_ele.innerHTML = `${timeout--} seconds remaining`;
   const timer_d = setInterval(() => {
     timer_ele.innerHTML = `${timeout--} seconds remaining`;
-    if (timeout < 0) {
+    if (timeout == 0) {
       clearInterval(timer_d);
       change_display(timer_ele, false);
       setTimeout(exp_callback, 0);
@@ -74,14 +79,14 @@ function start_timer(timeout, exp_callback) {
 
 function start_input(numbers) {
   let inputs;
-  area_ele.value='';
+  area_ele.value = "";
   change_display(input_ele, true);
   start_timer(FILL_TIME, () => {
     inputs = area_ele.value
       .split(/\s+/)
       .map(x => Number(x.trim()))
       .filter(x => x);
-    change_display(input_ele, false);
+    fading(change_display(input_ele, false);
     setTimeout(() => scoring(numbers, new Set(inputs)), 0);
   });
 }
@@ -109,14 +114,16 @@ function scoring(orig, input) {
 }
 
 function final_result() {
-  const result_text = results.map(x => JSON.stringify(x)).join('<br/>');
+  const result_text = results.map(x => JSON.stringify(x)).join("<br/>");
   let final = results[0].score;
   if (results.length > 1) {
     const bests = results.map(x => x.score).sort();
     bests.shift();
-    final = bests.reduce((a,x) => a+x, 0)/bests.length;
+    final = bests.reduce((a, x) => a + x, 0) / bests.length;
   }
-  document.getElementById('result').innerHTML = `${result_text}<br/>Final Score: ${final}`;
+  document.getElementById(
+    "result"
+  ).innerHTML = `${result_text}<br/>Final Score: ${final}`;
 }
 
 function ff_wrapper() {
@@ -125,5 +132,5 @@ function ff_wrapper() {
 function generate_test_set() {
   button_ele.value = `Test ${results.length + 1} of ${TEST_REPEAT}`;
   button_ele.addEventListener("click", start_test);
-  document.getElementsByTagName('h1')[0].addEventListener('click', ff_wrapper);
+  document.getElementsByTagName("h1")[0].addEventListener("click", ff_wrapper);
 }
