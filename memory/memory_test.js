@@ -133,6 +133,8 @@ function ff_wrapper() {
 }
 function generate_test_set() {
   results = [];
+  change_display(document.getElementById("result"), false);
+  
   button_ele.value = `Test ${results.length + 1} of ${TEST_REPEAT}`;
   button_ele.onclick = start_test;
   document.getElementsByTagName("h1")[0].addEventListener("click", ff_wrapper);
