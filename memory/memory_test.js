@@ -13,6 +13,11 @@ const rand_factory = s => {
 };
 const random = rand_factory(seed);
 const timer_ele = document.getElementById("timer_div");
+const area_ele = document.getElementByTagName("textarea");
+
+function change_visible(ele, visible) {
+  ele.style.visibility = visible?'visible':'hidden';  
+}
 
 function generate_test() {
   function generate_numbers(len) {
@@ -29,7 +34,11 @@ function generate_test() {
   p.innerHTML = numbers.join(" ");
   document.getElementById("numbers_div").appendChild(p);
   
-  start_timer(SHOW_TIME)
+  let inputs;
+  start_timer(SHOW_TIME,() => {
+  const    input_raw = document.getElementByTagName("textarea").innerHTML;
+    
+  });
 }
 
 function start_timer(timeout, exp_callback) {
@@ -46,7 +55,4 @@ function start_input() {}
 
 function start_grading() {}
 
-generate_test()
-  .then()
-  .thne();
-start_timer(SHOW_TIME, start_input);
+generate_test();
