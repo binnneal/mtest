@@ -19,6 +19,7 @@ const area_ele = document.getElementsByTagName("textarea")[0];
 const input_ele = document.getElementById("input_area");
 const numbers_ele = document.getElementById("numbers_div");
 const button_ele = document.getElementsByTagName("input")[0];
+const result_ele = document.getElementById("result");
 
 let ff_function = () => console.log("no op");
 
@@ -120,9 +121,9 @@ function do_result() {
     bests.shift();
     final = bests.reduce((a, x) => a + x, 0) / bests.length;
   }
-  document.getElementById(
-    "result"
-  ).innerHTML = `${result_text}<br/>Final Score: ${final}`;
+  result_ele.innerHTML = `${result_text}<br/>Final Score: ${final}`;
+  change_display(result_ele, true);
+
   button_ele.value = "Restart Test";
   button_ele.onclick = generate_test_set;
   change_display(button_ele, true);
@@ -133,6 +134,8 @@ function ff_wrapper() {
 }
 function generate_test_set() {
   results = [];
+  change_display(result_ele, false);
+
   button_ele.value = `Test ${results.length + 1} of ${TEST_REPEAT}`;
   button_ele.onclick = start_test;
   document.getElementsByTagName("h1")[0].addEventListener("click", ff_wrapper);
