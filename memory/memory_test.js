@@ -1,5 +1,5 @@
-const SHOW_TIME = 10;
-const FILL_TIME = 20;
+const SHOW_TIME = 20;
+const FILL_TIME = 30;
 const TEST_SIZE = 12;
 const TEST_REPEAT = 3;
 const min = 10;
@@ -83,7 +83,7 @@ function start_input(numbers) {
   change_display(input_ele, true);
   start_timer(FILL_TIME, () => {
     inputs = area_ele.value
-      .split(/\s+/)
+      .split(/[\s,]+/)
       .map(x => Number(x.trim()))
       .filter(x => x);
     fading(input_ele, () => scoring(numbers, new Set(inputs)));
