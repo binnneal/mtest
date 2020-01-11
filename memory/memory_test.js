@@ -29,4 +29,13 @@ function generate_numbers(len) {
   return numbers;
 }
 
+const timer_ele = document.getElementById("timer_div");
+let remaining_time = SHOW_TIME;
+function update_timer() {
+  timer_ele.innerHTML = `${remaining_time} remaining`;
+  remaining_time--;
+  if ()
+}
+
 generate_test();
+setInterval(update_timer, 1000);
