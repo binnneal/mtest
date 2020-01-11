@@ -23,7 +23,7 @@ function change_display(ele, displayed) {
   ele.style.display = displayed ? "block" : "none";
 }
 
-function generate_test() {
+function start_test() {
   change_display(button_ele, false);
   let numbers = new Set();
   while (numbers.size < TEST_SIZE) {
@@ -73,10 +73,15 @@ function scoring(orig, input) {
   });
   if (results.length < TEST_REPEAT) {
     setTimeout(() => {
-      button_ele.value = `Start Test ${results.length}`;
+      button_ele.value = `Start Test ${results.length+1} of ${TEST_REPEAT}`;
       change_display(button_ele, true);
     }, 0);
   }
+}
+
+function generate_test_set() {
+      button_ele.value = `Start Test ${results.length+1} of ${TEST_REPEAT}`;
+  button_ele.addEventListener('click', start_test);
 }
 
 //scoring(new Set([11, 22, 33, 4, 2]), new Set([2, 56, 33]))

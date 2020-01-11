@@ -1,6 +1,6 @@
 /* CSS files add styling rules to your content */
 .content {
-  max-width: 500px;
+  max-width: 600px;
   font-family: helvetica, arial, sans-serif;
   font-size: 2em;
   margin: auto;
@@ -17,9 +17,13 @@ textarea {
   display: none;
 }
 
-div {
+#numbers_div {
+  font-style: bold;
+}
+
+#timer_div {
   font-style: italic;
-  font-size: 1em;
+  font-size: 50%;
   color: green;
 }
 
