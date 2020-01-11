@@ -29,7 +29,7 @@ function generate_test() {
   while (numbers.size < TEST_SIZE) {
     numbers.add(Math.floor(random() * (max - min) + min));
   }
-  numbers_ele.appendChild(document.createTextNode([...numbers].join(" ")));
+  numbers_ele.innerHTML = [...numbers].join(" ");
   change_display(numbers_ele, true);
   
   start_timer(SHOW_TIME, () => {

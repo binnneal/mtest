@@ -1,9 +1,9 @@
 /* CSS files add styling rules to your content */
-
-body {
+.content {
+  max-width: 500px;
   font-family: helvetica, arial, sans-serif;
   font-size: 2em;
-  margin: 2em;
+  margin: auto;
 }
 
 h1 {
@@ -13,7 +13,7 @@ h1 {
 
 textarea {
   font-style: bold;
-    font-size: 1em;
+  font-size: 1em;
   display: none;
 }
 
@@ -24,9 +24,11 @@ div {
 }
 
 input {
+  display: block;
+  margin: 0 auto;
   font-size: 4em;
 }
 
 #result {
-  display: none; 
+  display: none;
 }
