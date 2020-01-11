@@ -15,24 +15,22 @@
       <form>
         <input
           type="button"
+          class="button"
           value="Starting Test Set"
           onclick="generate_test_set()"
         />
       </form>
-      <div id="numbers_div" style="display:none"><p class="info">
-        Try to remember all numbers here:
-        </p><p>
-        
-        </p></div>
+      <div id="numbers_div" style="display:none">
+        <p class="info">
+          Try to remember all numbers here:
+        </p>
+        <p></p>
+      </div>
       <div id="input_area" style="display:none">
         <p class="info">
           Type the numbers (separted by 'space' or new line)
         </p>
-      <textarea
-        id="numbers"
-        rows="12"
-        cols="30"
-      ></textarea>
+        <textarea id="numbers" rows="12" cols="30"></textarea>
       </div>
       <div id="timer_div" class="info"></div>
       <div id="result" class="info"></div>
