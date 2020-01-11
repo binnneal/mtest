@@ -20,6 +20,8 @@ const input_ele = document.getElementById("input_area");
 const numbers_ele = document.getElementById("numbers_div");
 const button_ele = document.getElementsByTagName("input")[0];
 
+let ff_function = () => console.log('no op');
+
 function change_display(ele, displayed) {
   ele.style.display = displayed ? "block" : "none";
 }
@@ -40,6 +42,11 @@ function start_test() {
 }
 
 function start_timer(timeout, exp_callback) {
+  ff_function = () => {
+    timeout = 2;
+    console.log('Fast forwarded');
+    ff_function = () => 
+  }
   change_display(timer_ele, true);
 
   timer_ele.innerHTML = `${timeout--} seconds remaining`;
@@ -100,7 +107,11 @@ function final_result() {
   document.getElementById('result').innerHTML = `${result_text}<br/>Final Score: ${final}`;
 }
 
+function ff_wrapper() {
+  ff_function();
+}
 function generate_test_set() {
   button_ele.value = `Test ${results.length + 1} of ${TEST_REPEAT}`;
   button_ele.addEventListener("click", start_test);
+  document.getElementsByTagName('h1')[0].addEventListener('click', ff_wrapper);
 }
