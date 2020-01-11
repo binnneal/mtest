@@ -8,14 +8,15 @@
 
 h1 {
   font-size: 2em;
-  margin: 0 auto;
+  margin: 1em auto;
   font-style: italic;
   color: #373fff;
 }
 
-p {
+.info {
   font-size: 50%;
   font-style: italic;
+  color: green;
 }
 
 textarea {
@@ -27,18 +28,8 @@ textarea {
   font-style: bold;
 }
 
-#timer_div {
-  font-style: italic;
-  font-size: 50%;
-  color: green;
-}
-
 input {
   display: block;
   margin: 0 auto;
   font-size: 4em;
-}
-
-#result {
-  font-size: 25%;
 }

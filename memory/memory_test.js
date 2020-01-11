@@ -1,7 +1,7 @@
 const SHOW_TIME = 5;
 const FILL_TIME = 10;
 const TEST_SIZE = 12;
-const TEST_REPEAT = 2;
+const TEST_REPEAT = 1;
 const min = 10;
 const max = 100;
 
@@ -90,7 +90,7 @@ function scoring(orig, input) {
 }
 
 function final_result() {
-  document.getElementById('result').innerHTML = String(results);
+  document.getElementById('result').innerHTML = JSON.stringify(results);
 }
 
 function generate_test_set() {
