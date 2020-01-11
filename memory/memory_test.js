@@ -58,7 +58,10 @@ function start_input(numbers) {
 }
 
 function scoring(orig, inputs) {
+  const score = [...orig].reduce((accr, x) => inputs.has(x)?accr+1:accr, 0);
   console.log(orig, inputs);
-  orig.reduce((accr, x) => )
+  console.log(`score: ${score}`);
 }
+
+//scoring(new Set([11, 22, 33, 4, 2]), new Set([2, 56, 33]))
 generate_test();
