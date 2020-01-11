@@ -14,7 +14,7 @@ h1 {
 }
 
 .info {
-  font-size: 50%;
+  font-size: .5em;
   font-style: italic;
   color: green;
 }
@@ -28,8 +28,14 @@ textarea {
   font-style: bold;
 }
 
-input[type="button"] {
-  display: block;
-  margin: 0 auto;
-  font-size: 4em;
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  margin: auto;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
 }

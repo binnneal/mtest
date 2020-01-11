@@ -81,7 +81,7 @@ function scoring(orig, input) {
   });
   if (results.length < TEST_REPEAT) {
     setTimeout(() => {
-      button_ele.value = `Start Test ${results.length + 1} of ${TEST_REPEAT}`;
+      button_ele.value = `Test ${results.length + 1} of ${TEST_REPEAT}`;
       change_display(button_ele, true);
     }, 0);
   } else {
@@ -94,7 +94,7 @@ function final_result() {
 }
 
 function generate_test_set() {
-  button_ele.value = `Start Test ${results.length + 1} of ${TEST_REPEAT}`;
+  button_ele.value = `Test ${results.length + 1} of ${TEST_REPEAT}`;
   button_ele.addEventListener("click", start_test);
 }
 
