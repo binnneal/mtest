@@ -86,8 +86,7 @@ function start_input(numbers) {
       .split(/\s+/)
       .map(x => Number(x.trim()))
       .filter(x => x);
-    fading(change_display(input_ele, false);
-    setTimeout(() => scoring(numbers, new Set(inputs)), 0);
+    fading(input_ele, () => scoring(numbers, new Set(inputs)));
   });
 }
 
