@@ -1,11 +1,11 @@
-const SHOW_TIME = 5;
-const FILL_TIME = 10;
+const SHOW_TIME = 10;
+const FILL_TIME = 20;
 const TEST_SIZE = 12;
 const TEST_REPEAT = 3;
 const min = 10;
 const max = 100;
 
-const seed = 1234;
+const seed = 234;
 const rand_factory = s => {
   return function() {
     s = Math.sin(s) * 10000;
