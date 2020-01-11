@@ -1,5 +1,5 @@
-const SHOW_TIME = 10;
-const FILL_TIME = 30;
+const SHOW_TIME = 5;
+const FILL_TIME = 10;
 const TEST_SET = 12;
 const min = 10;
 const max = 100;
@@ -16,8 +16,8 @@ const timer_ele = document.getElementById("timer_div");
 const area_ele = document.getElementsByTagName("textarea")[0];
 const numbers_ele = document.getElementById("numbers_div");
 
-function change_display(ele, visible) {
-  ele.style.visibility = visible ? "visible" : "hidden";
+function change_display(ele, displayed) {
+  ele.style.display = displayed ? "block" : "none";
 }
 
 function generate_test() {
@@ -35,9 +35,16 @@ function generate_test() {
 
   let inputs;
   start_timer(SHOW_TIME, () => {
-    change_visible(numbers_ele, false);
-    console.log(area_ele.innerHTML);
+    change_display(numbers_ele, false);
+    setTimeout(start_input, 0);
   });
+
+  function start_input() {
+    change_display(area_ele, true);
+    start_timer(FILL_TIME, () => {
+      console.log(area_ele.value.split('\n').trim());
+    });
+  }
 }
 
 function start_timer(timeout, exp_callback) {
@@ -49,9 +56,5 @@ function start_timer(timeout, exp_callback) {
     }
   }, 1000);
 }
-
-function start_input() {}
-
-function start_grading() {}
 
 generate_test();
