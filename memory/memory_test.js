@@ -91,6 +91,10 @@ function scoring(orig, input) {
 
 function final_result() {
   const result_text=JSON.stringify(results);
+  if (results.length > 2) {
+    const best_except1 = results.map(x => x.score).sort().shift();
+    const final = best_except1.reduce((a,x) => a+x, 0)/best_except1;
+  }
   document.getElementById('result').innerHTML = result_text;
 }
 
@@ -98,5 +102,3 @@ function generate_test_set() {
   button_ele.value = `Test ${results.length + 1} of ${TEST_REPEAT}`;
   button_ele.addEventListener("click", start_test);
 }
-
-//scoring(new Set([11, 22, 33, 4, 2]), new Set([2, 56, 33]))
