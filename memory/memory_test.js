@@ -45,7 +45,7 @@ function start_timer(timeout, exp_callback) {
   ff_function = () => {
     timeout = 2;
     console.log('Fast forwarded');
-    ff_function = () => 
+    ff_function = () => console.log('No op');
   }
   change_display(timer_ele, true);
 
