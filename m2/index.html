@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Hello!</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- import the webpage's stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body onload="start()">
+  <div id="content_d">
+    <h1 align="center" id="subject_h1">Memory Test</h1>
+    <div id="result_d" style="margin:1em" class="info"></div>
+
+    <form>
+      <input type="button" class="button" id="master_b" />
+    </form>
+    <div id="numbers_d" style="display:none">
+      <p class="info">
+        Try to memorize all numbers here:
+      </p>
+      <p>
+      </p>
+    </div>
+    <div id="input_d" style="display:none">
+      <p class="info">
+        Click on the number you have seen earlier:
+      </p>
+      <div id="choices_d">
+        <div>
+          <form><input type="button" class="button" value="A" /></form>
+        </div>
+        <div>
+          <form><input type="button" class="button" value="B" /></form>
+        </div>
+      </div>
+    </div>
+    <div id="timer_d" class="info"></div>
+  </div>
+
+  <!-- import the webpage's javascript file -->
+  <script src="memory_test.js"></script>
+</body>
+
+</html>
