@@ -23,7 +23,7 @@
       <p class="info">
         Try to memorize all numbers here:
       </p>
-      <p>
+      <p class="numbers">
       </p>
     </div>
     <div id="input_d" style="display:none">
@@ -31,12 +31,20 @@
         Click on the number you have seen earlier:
       </p>
       <div id="choices_d">
-        <div>
-          <form><input type="button" class="button" value="A" /></form>
-        </div>
-        <div>
-          <form><input type="button" class="button" value="B" /></form>
-        </div>
+        <table>
+          <tr>
+            <th>
+              <div>
+                <form><input type="button" class="button" value="A" /></form>
+              </div>
+            </th>
+            <th>
+              <div>
+                <form><input type="button" class="button" value="B" /></form>
+              </div>
+            </th>
+          </tr>
+        </table>
       </div>
     </div>
     <div id="timer_d" class="info"></div>
@@ -44,6 +52,4 @@
 
   <!-- import the webpage's javascript file -->
   <script src="memory_test.js"></script>
-</body>
-
-</html>
+</body></html>

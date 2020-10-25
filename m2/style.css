@@ -1,5 +1,5 @@
 /* CSS files add styling rules to your content */
-.content {
+#content_d {
   max-width: 600px;
   font-family: helvetica, arial, sans-serif;
   font-size: 2em;
@@ -14,29 +14,33 @@ h1 {
 }
 
 .info {
-  font-size: .5em;
+  font-size: 1em;
   font-style: italic;
   color: green;
 }
 
-textarea {
-  font-style: bold;
-  font-size: 1em;
-}
-
-#numbers_div {
+#numbers_d {
   font-style: bold;
 }
 
+.number {
+  font-size: 4em;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .button {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
+  /* Green */
   border: none;
   color: white;
   padding: 10px 20px;
   text-align: center;
   display: block;
-  font-size: 1em;
+  font-size: 2em;
   border-radius: 4px;
   margin: auto;
 }
