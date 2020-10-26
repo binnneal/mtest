@@ -15,9 +15,12 @@
   <div id="content_d">
     <h1 align="center" id="subject_h1">Memory Test</h1>
     <div id="result_d" style="margin:1em" class="info"></div>
-
     <form>
       <input type="button" class="button" id="master_b" />
+    </form>
+    <p></p>
+    <form>
+      <input type="button" class="button" id="switch_b" />
     </form>
     <div id="numbers_d" style="display:none">
       <p class="info">
@@ -26,25 +29,38 @@
       <p class="numbers">
       </p>
     </div>
+    <div id="board_d" style="display:none">
+      <p class="info">
+        Try to memorize the location of all the stars:
+      </p>
+      <div style="text-align:center;">
+        <canvas id="board_c"> </canvas>
+      </div>
+    </div>
     <div id="input_d" style="display:none">
       <p class="info">
         Click on the number you have seen earlier:
       </p>
-      <div id="choices_d">
-        <table>
-          <tr>
-            <th>
-              <div>
-                <form><input type="button" class="button" value="A" /></form>
-              </div>
-            </th>
-            <th>
-              <div>
-                <form><input type="button" class="button" value="B" /></form>
-              </div>
-            </th>
-          </tr>
-        </table>
+      <div style="width: 100%;">
+        <div style="width: 50%; float: left;">
+          <form><input type="button" class="button" style="font-size:3em;  margin-left:50%;" value="A" /></form>
+        </div>
+        <div style="margin-left 50%;">
+          <form><input type="button" class="button" style="font-size:3em;margin-right:50%;" value="B" /></form>
+        </div>
+      </div>
+    </div>
+    <div id="canvas_d" style="display:none">
+      <p class="info">
+        Click on the pattern you have seen earlier:
+      </p>
+      <div style="width: 100%;">
+        <div style="width: 50%; float: left;">
+          <canvas> </canvas>
+        </div>
+        <div style="margin-left 50%;">
+          <canvas> </canvas>
+        </div>
       </div>
     </div>
     <div id="timer_d" class="info"></div>
