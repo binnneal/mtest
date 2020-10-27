@@ -13,14 +13,14 @@
 
 <body onload="start()">
   <div id="content_d">
-    <h1 align="center" id="subject_h1">Memory Test</h1>
+    <h1 align="center" id="subject_h1">Memory Test 2020</h1>
     <div id="result_d" style="margin:1em" class="info"></div>
     <form>
       <input type="button" class="button" id="master_b" />
     </form>
     <p></p>
     <form>
-      <input type="button" class="button" id="switch_b" />
+      <input type="button" id="switch_b" class="button" style="font-size:0.5em;" />
     </form>
     <div id="numbers_d" style="display:none">
       <p class="info">
@@ -31,8 +31,10 @@
     </div>
     <div id="board_d" style="display:none">
       <p class="info">
-        Try to memorize the location of all the stars:
-      </p>
+        Try to memorize the location of all numbers:
+        <br><span style="font-size:0.5em;">
+          Hint: try to trace the numbers and memorize the shape
+        </span>
       <div style="text-align:center;">
         <canvas id="board_c"> </canvas>
       </div>
@@ -43,7 +45,7 @@
       </p>
       <div style="width: 100%;">
         <div style="width: 50%; float: left;">
-          <form><input type="button" class="button" style="font-size:3em;  margin-left:50%;" value="A" /></form>
+          <form><input type="button" class="button" style="font-size:3em;margin-left:50%;" value="A" /></form>
         </div>
         <div style="margin-left 50%;">
           <form><input type="button" class="button" style="font-size:3em;margin-right:50%;" value="B" /></form>
@@ -52,7 +54,7 @@
     </div>
     <div id="canvas_d" style="display:none">
       <p class="info">
-        Click on the pattern you have seen earlier:
+        Click on the board that has the number located as you saw earlier:
       </p>
       <div style="width: 100%;">
         <div style="width: 50%; float: left;">

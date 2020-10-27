@@ -1,6 +1,6 @@
 const SHOW_TIME = 20;
 const FILL_TIME = 8;
-const TEST_SIZE = 7;
+const TEST_SIZE = 8;
 const TEST_REPEAT = 2;
 const MIN = 10;
 const MAX = 99;
@@ -128,18 +128,18 @@ class Test {
     const big = right < wrong ? wrong : right;
     await this.choose_whatever(small, big);
 
-    this.result.push([`${right}`, this.answer]);
+    this.result.push([right, parseInt(this.answer)]);
     console.log(this.result);
   }
 
   get_score() {
     const score = this.result.reduce(
-      (accr, x) => (x[0] == x[1] ? accr + 1 : accr),
+      (accr, x) => (x[0] === x[1] ? accr + 1 : accr),
       0
     );
     return {
       score,
-      result: [...this.result],
+      record: [...this.result],
     };
   }
 }
@@ -193,14 +193,14 @@ class Canvas {
     this.ctx.stroke();
   }
 
-  fill(n, clear_first = false) {
+  fill(n, c, clear_first = false) {
     if (clear_first) {
       this.ctx.clearRect(0, 0, this.c.width, this.c.height);
       this.do_grid();
     }
     this.ctx.font = "20px verdana";
     //this.ctx.fillText(`${n}`, Math.floor(n / 10) * 50, (n % 10) * 50 + 25);
-    this.ctx.fillText(`*`, Math.floor(n / 10) * 50, (n % 10) * 50 + 25);
+    this.ctx.fillText(c, Math.floor(n / 10) * 50, (n % 10) * 50 + 25);
     this.c.value = `${n}`;
   }
 }
@@ -216,15 +216,17 @@ class TestPatterns extends Test {
 
   async show_whatever() {
     const canvas = new Canvas(document.getElementById("board_c"));
+    let i = 1;
     for (const n of this.numbers_list) {
-      canvas.fill(n);
+      canvas.fill(n, `${i++}`);
     }
     await display(this.board_d, SHOW_TIME, 4);
   }
 
   async choose_whatever(small, big) {
-    this.canvas[0].fill(small, true);
-    this.canvas[1].fill(big, true);
+    const i = this.result.length + 1;
+    this.canvas[0].fill(small, `${i}`, true);
+    this.canvas[1].fill(big, `${i}`, true);
 
     await display(this.canvas_d, FILL_TIME, 1);
   }
@@ -254,7 +256,7 @@ class TestSuite {
     this.master_b.addEventListener("click", (e) => this.handle_state(e));
 
     this.switch_b = document.getElementById("switch_b");
-    this.switch_b.value = `Switch To Visual`;
+    this.switch_b.value = `Switch To Visual Test`;
     this.switch_b.addEventListener("click", (e) => this.handle_state(e));
 
     document.getElementById("subject_h1").addEventListener("click",
@@ -271,7 +273,7 @@ class TestSuite {
 
   async handle_state(e) {
     if (e && e.target == this.switch_b) {
-      this.switch_b.value = `Switch To ${this.type}`;
+      this.switch_b.value = `Switch To ${this.type} Test`;
       this.test_numbers = !this.test_numbers;
     }
     if (this.state == states.START_TEST) {
@@ -308,13 +310,19 @@ class TestSuite {
   show_results() {
     let results = this.results;
     const result_text = results.map(x => JSON.stringify(x)).join("<br/>");
+
+    // final score is the average all all but the lowest score.
     let final = results[0].score;
     if (results.length > 1) {
       const bests = results.map(x => x.score).sort();
       bests.shift();
       final = bests.reduce((a, x) => a + x, 0) / bests.length;
     }
-    this.result_e.innerHTML = `${result_text}<br/>Final Score: ${final}`;
+    this.result_e.innerHTML = [
+      "Results (score,[correct,yours]):",
+      result_text,
+      `Final Score: ${final}`
+    ].join("<br/>");
     display(this.result_e);
   }
 }
