@@ -18,9 +18,8 @@
     <form>
       <input type="button" class="button" id="master_b" />
     </form>
-    <p></p>
     <form>
-      <input type="button" id="switch_b" class="button" style="font-size:0.5em;" />
+      <input type="button" id="switch_b" class="button" style="font-size:0.5em;margin-top:10px" />
     </form>
     <div id="numbers_d" style="display:none">
       <p class="info">
@@ -32,7 +31,7 @@
     <div id="board_d" style="display:none">
       <p class="info">
         Try to memorize the location of all numbers:
-        <br><span style="font-size:0.5em;">
+        <br><span id="hint" style="font-size:20px;">
           Hint: try to trace the numbers and memorize the shape
         </span>
       <div style="text-align:center;">
@@ -45,10 +44,10 @@
       </p>
       <div style="width: 100%;">
         <div style="width: 50%; float: left;">
-          <form><input type="button" class="button" style="font-size:3em;margin-left:50%;" value="A" /></form>
+          <form><input type="button" class="button" style="font-size:2.5em;float:right;margin-right:10px" value="A" /></form>
         </div>
-        <div style="margin-left 50%;">
-          <form><input type="button" class="button" style="font-size:3em;margin-right:50%;" value="B" /></form>
+        <div>
+          <form><input type="button" class="button" style="font-size:2.5em;margin-left:0" value="B" /></form>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 const SHOW_TIME = 20;
-const FILL_TIME = 8;
-const TEST_SIZE = 8;
-const TEST_REPEAT = 2;
+const FILL_TIME = 9;
+const TEST_SIZE = 9;
+const TEST_REPEAT = 3;
 const MIN = 10;
 const MAX = 99;
 
@@ -147,7 +147,7 @@ class Test {
 class TestNumbers extends Test {
   constructor() {
     super();
-
+    this.type = "number";
     this.input_d = document.getElementById("input_d");
     this.choices = this.input_d.querySelectorAll("input");
   }
@@ -167,7 +167,7 @@ class TestNumbers extends Test {
 
 class Canvas {
   constructor(canvas) {
-    const SZ = 500;
+    const SZ = 450;
     this.c = canvas;
     this.c.height = this.c.width = SZ;
     this.ctx = canvas.getContext("2d");
@@ -199,23 +199,38 @@ class Canvas {
       this.do_grid();
     }
     this.ctx.font = "20px verdana";
-    //this.ctx.fillText(`${n}`, Math.floor(n / 10) * 50, (n % 10) * 50 + 25);
-    this.ctx.fillText(c, Math.floor(n / 10) * 50, (n % 10) * 50 + 25);
+    this.ctx.fillText(c, Math.floor(n / 10) * 50 - 40, (n % 10) * 45 + 25);
     this.c.value = `${n}`;
+  }
+
+  fill_all() {
+    for (let i = MIN; i < MAX; i++) {
+      this.fill(i, `${i}`);
+    }
   }
 }
 
 class TestPatterns extends Test {
   constructor() {
     super();
+    this.type = "visual";
     this.canvas_d = document.getElementById("canvas_d");
     this.choices = this.canvas_d.querySelectorAll("canvas");
     this.canvas = [
       new Canvas(this.choices[0]), new Canvas(this.choices[1])];
   }
 
-  async show_whatever() {
+  async show_all() {
     const canvas = new Canvas(document.getElementById("board_c"));
+    let i = 1;
+    canvas.fill_all();
+    await display(this.board_d, SHOW_TIME * 10, 4);
+  }
+
+  async show_whatever() {
+    // show all numbers: await this.show_all();
+    const canvas = new Canvas(document.getElementById("board_c"));
+    await display(this.board_d, 5, 0);
     let i = 1;
     for (const n of this.numbers_list) {
       canvas.fill(n, `${i++}`);
@@ -233,9 +248,11 @@ class TestPatterns extends Test {
 }
 
 const states = {
-  START_TEST: 0,
-  TEST: 1,
-  RESULT: 2,
+  INIT: 0,
+  START_TEST: 1,
+  TEST: 2,
+  RESULT: 3,
+  ALL_IN: 4,
 };
 
 class TestSuite {
@@ -247,83 +264,147 @@ class TestSuite {
     document.body.replaceChild(content_d.cloneNode(true), content_d);
 
     timer = new Timer();
-    this.results = [];
+    this.init_all();
+
     this.result_e = document.getElementById("result_d");
-
     this.master_b = document.getElementById("master_b");
-    this.master_b.value = `Start ${this.type} Test`;
-    this.state = states.START_TEST;
-    this.master_b.addEventListener("click", (e) => this.handle_state(e));
-
     this.switch_b = document.getElementById("switch_b");
-    this.switch_b.value = `Switch To Visual Test`;
+
+    this.master_b.addEventListener("click", (e) => this.handle_state(e));
     this.switch_b.addEventListener("click", (e) => this.handle_state(e));
 
     document.getElementById("subject_h1").addEventListener("click",
       () => timer.expire()
     );
+    setTimeout(() => this.handle_state(), 0);
   }
 
   get type() {
-    return this.test_numbers ? "Number" : "Visual";
+    return this.test_numbers ? "number" : "visual";
   }
   get other_type() {
-    return !this.test_numbers ? "Number" : "Visual";
+    return !this.test_numbers ? "number" : "visual";
+  }
+
+  init_all() {
+    this.results = {
+      number: [],
+      visual: []
+    };
+    this.final = {};
+    this.state = states.INIT;
   }
 
   async handle_state(e) {
-    if (e && e.target == this.switch_b) {
-      this.switch_b.value = `Switch To ${this.type} Test`;
-      this.test_numbers = !this.test_numbers;
-    }
-    if (this.state == states.START_TEST) {
+    const result_type = this.results[this.type];
+    if (this.state == states.INIT) {
+      this.master_b.value = `Start ${this.type} test`;
+      this.switch_b.value = `Switch to ${this.other_type} test`;
+
+      if (e) {
+        if (e.target == this.switch_b) {
+          this.test_numbers = !this.test_numbers;
+        } else if (e.target == this.master_b) {
+          result_type.length = 0;
+          this.state = states.START_TEST;
+        }
+        setTimeout(() => this.handle_state(), 0);
+      }
+    } else if (this.state == states.START_TEST) {
       hide(this.switch_b);
       hide(this.result_e);
-      this.master_b.value = `${this.type} Test ${this.results.length + 1} of ${TEST_REPEAT}`;
+      this.master_b.value = `Test (${this.type}) ${result_type.length + 1} of ${TEST_REPEAT}`;
       this.state = states.TEST;
       display(this.master_b);
     } else if (this.state == states.TEST) {
       hide(this.master_b);
       let test = this.test_numbers ? new TestNumbers() : new TestPatterns();
       await test.run();
-      this.get_result(test);
+      result_type.push(test.get_score());
+      if (result_type.length == TEST_REPEAT) {
+        this.handle_results();
+      }
+      setTimeout(() => this.handle_state(), 0);
     } else if (this.state == states.RESULT) {
-      this.master_b.value = "Restart Test";
-      this.results = [];
+      this.master_b.value = `Redo ${this.type} tests`;
       display(this.master_b);
       display(this.switch_b);
-      this.state = states.START_TEST;
+      this.state = states.INIT;
+    } else if (this.state == states.ALL_IN) {
+      if (e) {
+        if (e.target == this.master_b) {
+          this.submit_results();
+          // Not reached after above.
+          return;
+        }
+        if (e.target == this.switch_b) {
+          this.init_all();
+          setTimeout(() => this.handle_state(), 0);
+          return;
+        }
+      }
+      this.master_b.value = "Submit (leave)";
+      this.switch_b.value = "Restart all";
+      display(this.master_b);
+      display(this.switch_b);
     }
   }
 
-  get_result(test) {
-    this.results.push(test.get_score());
-    if (this.results.length < TEST_REPEAT) {
-      this.state = states.START_TEST;
-    } else {
-      this.state = states.RESULT;
-      this.show_results();
-    }
-    setTimeout(() => this.handle_state(), 0);
-  }
-
-  show_results() {
-    let results = this.results;
-    const result_text = results.map(x => JSON.stringify(x)).join("<br/>");
+  handle_results() {
+    const result_type = this.results[this.type];
 
     // final score is the average all all but the lowest score.
-    let final = results[0].score;
-    if (results.length > 1) {
-      const bests = results.map(x => x.score).sort();
+    let final = result_type[0].score;
+    let range = 0;
+    if (result_type.length > 1) {
+      const bests = result_type.map(x => x.score).sort();
+      range = bests[bests.length - 1] - bests[0];
       bests.shift();
       final = bests.reduce((a, x) => a + x, 0) / bests.length;
     }
+    this.final[this.type] = final;
+    this.final[`${this.type}_range`] = range;
+    const result_text = result_type.map(x => JSON.stringify(x)).join("<br/>");
     this.result_e.innerHTML = [
-      "Results (score,[correct,yours]):",
+      `Results for ${this.type} test (score,[correct,yours]):`,
       result_text,
-      `Final Score: ${final}`
+      `Final Score: ${JSON.stringify(this.final)}`
     ].join("<br/>");
     display(this.result_e);
+
+    // Check to see we got all resutls in.
+    if (this.final.number && this.final.visual) {
+      this.state = states.ALL_IN;
+    } else {
+      this.state = states.RESULT;
+    }
+  }
+
+  submit_results() {
+    Object.defineProperty(String.prototype, 'hashCode', {
+      value: function () {
+        var hash = 0,
+          i, chr;
+        for (i = 0; i < this.length; i++) {
+          chr = this.charCodeAt(i);
+          hash = ((hash << 5) - hash) + chr;
+          hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+      }
+    });
+
+    const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd5PwnQyL4P57RAC_b5rnV7kf42tZ9kj5AzsBMzi8AoZDXOOA/viewform?usp=pp_url&entry.1319078321=_NUMBER_SCORE_&entry.1496658994=_VISUAL_SCORE_&entry.1641140264=_NUMBER_RANGE_&entry.1951185582=_VISUAL_RANGE_&entry.1391199194=_RAW_RECORD_&entry.235269604=_RAW_HASHCODE_";
+
+    let url = FORM_URL.replace("_NUMBER_SCORE_", this.final.number);
+    url = url.replace("_VISUAL_SCORE_", this.final.visual);
+    url = url.replace("_NUMBER_RANGE_", this.final.number_range);
+    url = url.replace("_VISUAL_RANGE_", this.final.visual_range);
+    url = url.replace("_RAW_RECORD_", encodeURIComponent(JSON.stringify(this.results)));
+    url = url.replace("_RAW_HASHCODE_", JSON.stringify(this.results).hashCode());
+
+    console.log(url);
+    window.open(url, "_self");
   }
 }
 
