@@ -18,30 +18,46 @@ const get_random = () => Math.floor(random() * (MAX - MIN) + MIN);
 let timer;
 let hide = (e) => e.style.display = "none";
 
-async function fade(e, duration = 0) {
+async function fade(e, fade_time = 0, fade_in = false) {
   const INCR_MSEC = 100;
-  e.style.opacity = duration > 0 ? 1 : 0;
+  let increment = fade_time == 0 ? 1 : INCR_MSEC / (1000 * fade_time);
+  let opacity;
+  if (fade_in) {
+    e.style.display = "block";
+    opacity = 0;
+  } else {
+    increment = -increment;
+    opacity = 1;
+  }
   return await new Promise(resolve => {
+    timer.forced = false;
     const interval = setInterval(() => {
-      e.style.opacity -= INCR_MSEC / (1000 * duration);
-      if (e.style.opacity <= 0) {
+      opacity += increment;
+      e.style.opacity = opacity;
+      if (timer.forced || fade_in && opacity >= 1 || !fade_in && opacity <= 0) {
         clearInterval(interval);
-        hide(e);
-        resolve();
+        if (!fade_in) hide(e);
+        resolve(timer.forced);
       }
     }, INCR_MSEC);
-  })
+  });
 }
 
-async function display(e, timeout = null, fade_int = 0) {
+// fade_time: < 0 is for fade in and > 0 is for fade out.
+async function display(e, duration = null, fade_out = 0, fade_in = 0) {
   e.style.display = "block";
-  e.style.opacity = 1; // Reset opacity.
-  if (!timeout) return;
 
-  if (await timer.start(timeout - fade_int)) {
-    fade_int = 0; // forced
+  if (fade_in) {
+    e.style.opacity = 0;
+    await fade(e, fade_in, true); // Fade in.
   }
-  await fade(e, fade_int);
+  e.style.opacity = 1; // Reset opacity.    
+
+  if (!duration) return;
+  if (await timer.start((duration - fade_out) * 1000)) {
+    fade_out = 0; // forced
+  }
+  await fade(e, fade_out); // Fade out.
 }
 
 
@@ -50,9 +66,10 @@ class Timer {
     this.timer_d = document.getElementById("timer_d");
   }
 
-  async start(timeout) {
-    this.timeout_ms = timeout * 1000;
-    display(this.timer_d);
+  async start(timeout_ms, msg = "remaining") {
+    this.timeout_ms = timeout_ms;
+    this.forced = false;
+    if (msg) display(this.timer_d);
     return await new Promise(resolve => {
       this.interval = setInterval(() => {
         if (this.timeout_ms <= 0) {
@@ -61,8 +78,8 @@ class Timer {
           resolve(this.forced);
         } else {
           this.timeout_ms -= 100;
-          timeout = Math.floor(this.timeout_ms / 1000);
-          this.timer_d.innerHTML = `${timeout} seconds remaining`;
+          const timeout = Math.floor(this.timeout_ms / 1000);
+          this.timer_d.innerHTML = `${timeout} seconds ${msg}`;
         }
       }, 100);
     });
@@ -129,7 +146,7 @@ class Test {
     await this.choose_whatever(small, big);
 
     this.result.push([right, parseInt(this.answer)]);
-    console.log(this.result);
+    //console.log(this.result);
   }
 
   get_score() {
@@ -160,7 +177,7 @@ class TestNumbers extends Test {
 
   async show_whatever() {
     this.numbers_d.lastElementChild.innerHTML = this.numbers_list.join(" ");
-    await display(this.numbers_d, SHOW_TIME, 4);
+    await display(this.numbers_d, SHOW_TIME, 6);
   }
 }
 
@@ -230,12 +247,18 @@ class TestPatterns extends Test {
   async show_whatever() {
     // show all numbers: await this.show_all();
     const canvas = new Canvas(document.getElementById("board_c"));
-    await display(this.board_d, 5, 0);
+    hide(canvas.c);
+    display(this.board_d);
+    let forced = await timer.start(4000, "to start");
+    forced = await display(canvas.c, 0, 0, /* fade_in */ forced ? 0 : 1);
     let i = 1;
     for (const n of this.numbers_list) {
       canvas.fill(n, `${i++}`);
+      if (!forced) {
+        forced = await timer.start(500, null);
+      }
     }
-    await display(this.board_d, SHOW_TIME, 4);
+    await display(this.board_d, SHOW_TIME, forced ? 0 : 4);
   }
 
   async choose_whatever(small, big) {
