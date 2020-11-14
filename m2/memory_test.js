@@ -5,7 +5,7 @@ const TEST_REPEAT = 3;
 const MIN = 10;
 const MAX = 99;
 
-const seed = 2345;
+const seed = 95811;
 const rand_factory = s => {
   return function () {
     s = Math.sin(s) * 10000;
@@ -96,12 +96,16 @@ class Test {
     this.result = [];
     const numbers = new Set();
     const wrong_numbers = new Set();
-    while (numbers.size < TEST_SIZE) {
+    while (true) {
       numbers.add(get_random());
+      if (numbers.size == TEST_SIZE) {
+        if (this.is_good_set(numbers)) break;
+        numbers.clear();
+      }
     }
     while (wrong_numbers.size < TEST_SIZE) {
       const n = get_random();
-      if (!numbers.has(n)) {
+      if (!numbers.has(n) && /* avoid doubles */ n % 11 != 0) {
         wrong_numbers.add(n);
       };
     }
@@ -113,7 +117,19 @@ class Test {
     this.numbers_d = document.getElementById("numbers_d");
     this.board_d = document.getElementById("board_d");
   }
-
+  // Returns true for good number frequency distibution.
+  is_good_set(number_set) {
+    let freq_count = new Array(10).fill(0);
+    for (const i of number_set) {
+      const d = Math.floor(i / 10);
+      freq_count[i % 10]++;
+      freq_count[d]++;
+      // A double is bad, add an extra.
+      if (i % 10 == d) freq_count[d]++;
+    }
+    // console.log(number_set, freq_count);
+    return Math.max(...freq_count) < 4;
+  }
   // to be overriden
   async show_whatever() {}
 
