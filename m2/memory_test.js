@@ -344,6 +344,13 @@ class TestSuite {
         if (e.target == this.switch_b) {
           this.test_numbers = !this.test_numbers;
         } else if (e.target == this.master_b) {
+          if (window.innerWidth < 1000 || window.innerHeight < 750) {
+            alert("Could please do me a favor and run the test on a " +
+              "desktop or a tablet (horizontal) screen instead?  " +
+              "Thank you so much!");
+            return;
+          }
+          hide(document.getElementById("intro"));
           result_type.length = 0;
           this.state = states.START_TEST;
         }

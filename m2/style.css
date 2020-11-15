@@ -13,6 +13,17 @@ h1 {
   color: #373fff;
 }
 
+iframe {
+  width: 640px;
+  height: 360px;
+  margin: 0 auto;
+}
+
+iframe {
+  display: block;
+  border-style: none;
+}
+
 .info {
   font-size: 1em;
   font-style: italic;
