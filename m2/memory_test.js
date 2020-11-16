@@ -342,9 +342,16 @@ class TestSuite {
       this.switch_b.value = `Switch to ${this.other_type} test`;
 
       if (e) {
+        let trigger_master = false;
         if (e.target == this.switch_b) {
           this.test_numbers = !this.test_numbers;
-        } else if (e.target == this.master_b) {
+          if (this.results.number.length + this.results.visual.length == 0) {
+            setTimeout(() => this.handle_state(), 0);
+            return;
+          }
+          trigger_master = true;
+        }
+        if (trigger_master || e.target == this.master_b) {
           hide(document.getElementById("intro"));
           result_type.length = 0;
           this.state = states.START_TEST;
@@ -355,6 +362,7 @@ class TestSuite {
       hide(this.switch_b);
       hide(this.result_e);
       this.master_b.value = `Test (${this.type}) ${result_type.length + 1} of ${TEST_REPEAT}`;
+      this.master_b.style.fontSize = "1em";
       this.state = states.TEST;
       display(this.master_b);
     } else if (this.state == states.TEST) {
@@ -368,6 +376,9 @@ class TestSuite {
       setTimeout(() => this.handle_state(), 0);
     } else if (this.state == states.RESULT) {
       this.master_b.value = `Redo ${this.type} tests`;
+      this.master_b.style.fontSize = "0.5em";
+      this.switch_b.value = `Switch to ${this.other_type} test`;
+      this.switch_b.style.fontSize = "1em";
       display(this.master_b);
       display(this.switch_b);
       this.state = states.INIT;
@@ -386,6 +397,8 @@ class TestSuite {
       }
       this.master_b.value = "Submit (leave)";
       this.switch_b.value = "Restart all";
+      this.master_b.style.fontSize = "1em";
+      this.switch_b.style.fontSize = "0.5em";
       display(this.master_b);
       display(this.switch_b);
     }
