@@ -261,7 +261,8 @@ class TestPatterns extends Test {
   }
 
   async show_whatever() {
-    // show all numbers: await this.show_all();
+    // show all numbers: 
+    // await this.show_all();
     const canvas = new Canvas(document.getElementById("board_c"));
     hide(canvas.c);
     display(this.board_d);
@@ -344,12 +345,6 @@ class TestSuite {
         if (e.target == this.switch_b) {
           this.test_numbers = !this.test_numbers;
         } else if (e.target == this.master_b) {
-          if (window.innerWidth < 640 || window.innerHeight < 500) {
-            alert("Could please do me a favor and run the test on a " +
-              "desktop or a tablet (horizontal) screen instead?  " +
-              `Thank you so much! \n(screen: ${window.innerWidth}x${window.innerHeight})`);
-            return;
-          }
           hide(document.getElementById("intro"));
           result_type.length = 0;
           this.state = states.START_TEST;
@@ -446,6 +441,8 @@ class TestSuite {
     url = url.replace("_VISUAL_SCORE_", this.final.visual);
     url = url.replace("_NUMBER_RANGE_", this.final.number_range);
     url = url.replace("_VISUAL_RANGE_", this.final.visual_range);
+
+    this.results.screen = `_${window.innerWidth}x${window.innerHeight}_`;
     url = url.replace("_RAW_RECORD_", encodeURIComponent(JSON.stringify(this.results)));
     url = url.replace("_RAW_HASHCODE_", JSON.stringify(this.results).hashCode());
 

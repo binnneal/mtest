@@ -2,20 +2,20 @@
 #content_d {
   max-width: 950px;
   font-family: helvetica, arial, sans-serif;
-  font-size: 2em;
+  font-size: 1em;
   margin: auto;
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 1em;
   margin: 20px auto;
   font-style: italic;
   color: #373fff;
 }
 
 iframe {
-  width: 640px;
-  height: 360px;
+  width: 480px;
+  height: 270px;
   margin: 0 auto;
 }
 
@@ -59,7 +59,7 @@ iframe {
 }
 
 .numbers {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 #board_d {
@@ -77,8 +77,8 @@ table {
 canvas {
   padding: 0;
   margin: 0 auto;
-  width: 450px;
-  height: 450px;
+  width: 350px;
+  height: 350px;
   border: 2px solid black;
 }
 
@@ -88,10 +88,10 @@ canvas {
   /* Green */
   border: none;
   color: white;
-  padding: 10px 20px;
+  padding: 5px 10px;
   text-align: center;
   display: block;
   font-size: 1em;
-  border-radius: 4px;
+  border-radius: 2px;
   margin: auto;
 }
