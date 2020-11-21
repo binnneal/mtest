@@ -5,7 +5,7 @@ const TEST_REPEAT = 3;
 const MIN = 10;
 const MAX = 99;
 
-const seed = 95811;
+const seed = 95120;
 const rand_factory = s => {
   return function () {
     s = Math.sin(s) * 10000;
@@ -192,7 +192,8 @@ class TestNumbers extends Test {
   }
 
   async show_whatever() {
-    this.numbers_d.lastElementChild.innerHTML = this.numbers_list.join(" ");
+    const sorted = [...this.numbers_list].sort((a, b) => a - b);
+    this.numbers_d.lastElementChild.innerHTML = sorted.join(" ");
     await display(this.numbers_d, SHOW_TIME, 6);
   }
 }
@@ -395,7 +396,7 @@ class TestSuite {
           return;
         }
       }
-      this.master_b.value = "Submit (leave)";
+      this.master_b.value = "Continue to Google Forms";
       this.switch_b.value = "Restart all";
       this.master_b.style.fontSize = "1em";
       this.switch_b.style.fontSize = "0.5em";
